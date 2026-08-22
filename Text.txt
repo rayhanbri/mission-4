@@ -1,0 +1,38 @@
+what is prisma and why it is important?
+
+
+How to install prisma orm postgress
+
+1. git init 
+2.git ignore 
+3.npm init -y
+4.npm install typescript tsx @types/node --save-dev
+5.npx tsc --init
+6.npm install prisma @types/pg --save-dev
+7.npm install @prisma/client @prisma/adapter-pg pg dotenv 
+
+8.ts config file 
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "strict": true,
+    "esModuleInterop": true,
+    "ignoreDeprecations": "6.0"
+  }
+}
+
+9.package.json
+{
+  "type": "module"
+}
+
+10.npx prisma
+
+11.npx prisma init --output ../generated/prisma
+
+
+12.npx create-db@latest
+
+13.replace database url 
