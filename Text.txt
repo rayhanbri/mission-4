@@ -36,3 +36,16 @@ How to install prisma orm postgress
 12.npx create-db@latest
 
 13.replace database url 
+
+14.ts config.js 
+ 
+ "types": ["node"],
+    "outDir": "dist",
+    "rootDir": "./"
+
+    15.
+
+    video - 08- 
+    1.schema.prisma 
+    2.npx prisma migrate dev 
+    3.npx prisma generate (generated file create hobe )
