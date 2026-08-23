@@ -49,3 +49,9 @@ How to install prisma orm postgress
     1.schema.prisma 
     2.npx prisma migrate dev 
     3.npx prisma generate (generated file create hobe )
+
+
+    video - 09 
+    1.src er modde lib file 
+    2.script.ts
+    3.npx tsx src/script.ts
