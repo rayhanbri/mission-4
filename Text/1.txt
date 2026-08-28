@@ -1,0 +1,58 @@
+1.git init 
+.gitignore (node_modules , dist ,generated,.env)
+3.npm init
+npm install typescript tsx @types/node --save-dev
+npx tsc --init
+4.entry ponit - server.ts
+5.type module 
+
+
+6.npm install prisma@7.10.0 @types/pg --save-dev
+npm install @prisma/client@7.10.0 @prisma/adapter-pg pg dotenv
+
+
+7.tsconfig.js file 
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  // "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+
+8.npx prisma 
+9.npx prisma init --output ../generated/prisma
+
+10.npm express // install dt also you can see in the website //install dev dependecies also
+
+11.bcrypt.js
+
+12.cors install // dev file also 
+
+13.cookie parser // dev dependecies also 
+
+14. http status install . 
+
+15.jwt insall //dev dependecies also 
+
+16.
+
+
+
+
+
+
+
