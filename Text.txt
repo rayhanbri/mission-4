@@ -1,0 +1,96 @@
+1.git init 
+.gitignore (node_modules , dist ,generated,.env)
+3.npm init
+npm install typescript tsx @types/node --save-dev
+npx tsc --init
+4.entry ponit - server.ts
+5.type module 
+
+
+6.npm install prisma@7.10.0 @types/pg --save-dev
+npm install @prisma/client@7.10.0 @prisma/adapter-pg pg dotenv
+
+
+7.
+tsconfig.js file 
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  // "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+
+8.npx prisma 
+9.npx prisma init --output ../generated/prisma
+
+10.npm express // install dt also you can see in the website //install dev dependecies also
+
+11.bcrypt.js
+
+12.cors install // dev file also 
+
+13.cookie parser // dev dependecies also 
+
+14. http status install . 
+
+15.jwt insall //dev dependecies also 
+
+---
+1.basic fuunction in serve.js and app.ts , basic get function in app.ts 
+2.write some devscripts in package.json ,dev ,build ,start 
+3. npm run build
+4.npm run dev 
+
+
+now connect prisma --
+1.create lib and prisma.ts 
+2.connect prisma in server.ts and disconnet 
+3.npx prisma migrate dev
+4.npx prisma generate
+
+---- 
+configure env. 
+
+1.source config index.ts 
+2.call it from server 
+---
+middlware in app.ts 
+
+------
+prisma schema 
+
+1. prisma.config.ts schema: "prisma/schema",
+2.user.prisma 
+3.pofile.prisma 
+4.change in schema.pirsma
+ output   = "../../generated/prisma"
+4.npx prisma migrate dev 
+5. npmx prisma generate 
+6.npm run dev chole kina dhekbho server. 
+
+
+----------
+create modules 
+1.create user folder 
+
+
+
+
+
+
+
+
