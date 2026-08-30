@@ -49,6 +49,9 @@ tsconfig.js file
 
 15.jwt insall //dev dependecies also 
 
+16.npm install -D tsx
+
+
 ---
 1.basic fuunction in serve.js and app.ts , basic get function in app.ts 
 2.write some devscripts in package.json ,dev ,build ,start 
