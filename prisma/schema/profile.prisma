@@ -15,3 +15,4 @@ model Profile {
 // 1.npx prisma migrate dev
 //2.npm install @prisma/client
 //3.npx prisma studio (t0 see the database )
+///4. npx prisma generate 
