@@ -1,23 +1,7 @@
 import httpStatus from "http-status";
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
-
-export const catchAsync = (fn: RequestHandler) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await fn(req, res, next);
-    } catch (error) {
-      console.log(error);
-
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-        success: false,
-        statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-        message: "Failed to register user",
-        error: (error as Error).message,
-      });
-    }
-  };
-};
+import { catchAsync } from "../../utils/catchAsync";
 
 // const registerUser = async (req: Request, res: Response) => {
 //   try {
