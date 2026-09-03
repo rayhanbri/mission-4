@@ -77,9 +77,18 @@ const getMyProfile = catchAsync(
       throw new Error(verifiedToken);
     }
 
+    // console.log(verifiedToken);
+
     //it is working for cookieparser
 
-    res.send("get my profile ");
+    const profile = await userService.getMyProfileFromDB(verifiedToken.id);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User profile fetched successfully",
+      data: { profile },
+    });
   },
 );
 
