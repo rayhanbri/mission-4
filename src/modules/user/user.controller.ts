@@ -58,6 +58,13 @@ const registerUser = catchAsync(
   },
 );
 
+const getMyProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.send("get my profile ");
+  },
+);
+
 export const userController = {
   registerUser,
+  getMyProfile,
 };
