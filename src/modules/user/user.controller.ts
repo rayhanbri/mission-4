@@ -60,6 +60,10 @@ const registerUser = catchAsync(
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const cookies = req.cookies;
+
+    console.log(cookies); //it is working for cookieparser 
+
     res.send("get my profile ");
   },
 );
