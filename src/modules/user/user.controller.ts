@@ -63,26 +63,10 @@ const registerUser = catchAsync(
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { accessToken } = req.cookies;
-
-    // console.log(req.user, "user request");
-
-    const verifiedToken = jwtUtils.verifyToken(
-      accessToken,
-      config.jwt_access_secret,
+    console.log(req.user, "user request");
+    const profile = await userService.getMyProfileFromDB(
+      req.user?.id as string,
     );
-
-    //verify token give jwt payload
-
-    if (typeof verifiedToken === "string") {
-      throw new Error(verifiedToken);
-    }
-
-    // console.log(verifiedToken);
-
-    //it is working for cookieparser
-
-    const profile = await userService.getMyProfileFromDB(verifiedToken.id);
-
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,

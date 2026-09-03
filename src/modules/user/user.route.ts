@@ -8,6 +8,19 @@ import { sendResponse } from "../../utils/sendResponse";
 
 const router = Router();
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        email: string;
+        name: string;
+        id: string;
+        role: Role;
+      };
+    }
+  }
+}
+
 router.post("/register", userController.registerUser);
 
 router.get(
@@ -30,6 +43,13 @@ router.get(
     if (requiredRoles.length && !requiredRoles.includes(role)) {
       res.send("this is forbidden ");
     }
+
+    req.user = {
+      email,
+      name,
+      id,
+      role,
+    };
 
     next();
   },
