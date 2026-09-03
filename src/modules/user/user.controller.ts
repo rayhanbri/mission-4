@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import { jwtUtils } from "../../utils/jwtUtils";
+import config from "../../config";
 
 // const registerUser = async (req: Request, res: Response) => {
 //   try {
@@ -60,9 +62,22 @@ const registerUser = catchAsync(
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const cookies = req.cookies;
+    const { accessToken } = req.cookies;
 
-    console.log(cookies); //it is working for cookieparser 
+    // console.log(req.user, "user request");
+
+    const verifiedToken = jwtUtils.verifyToken(
+      accessToken,
+      config.jwt_access_secret,
+    );
+
+    //verify token give jwt payload
+
+    if (typeof verifiedToken === "string") {
+      throw new Error(verifiedToken);
+    }
+
+    //it is working for cookieparser
 
     res.send("get my profile ");
   },
