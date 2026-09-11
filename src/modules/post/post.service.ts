@@ -12,7 +12,16 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
   return result;
 };
 
-const getAllPosts = async () => {};
+const getAllPosts = async () => {
+  const posts = await prisma.post.findMany({
+    include: {
+      author: true,
+      comments: true,
+    },
+  });
+
+  return posts;
+};
 
 const getPostById = async () => {};
 
