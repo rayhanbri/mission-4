@@ -7,6 +7,7 @@ import { prisma } from "./lib/prisma";
 import bcrypt from "bcryptjs";
 import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.routes";
+import { postRoutes } from "./modules/post/post.routes";
 const app: Application = express();
 
 app.use(
