@@ -209,6 +209,22 @@ const getPostsStats = async () => {
       },
     });
 
+    // //Not a good approach
+    // const allPosts = await tx.post.findMany();
+    // let totalPostViews = 0;
+    // allPosts.forEach((post) => {
+    //   totalPostViews = totalPostViews + post.views;
+    // });
+
+    // //Good Approach Aggregation concept explore it
+    const totalPostViewsAggregate = await tx.post.aggregate({
+      _sum: {
+        views: true,
+      },
+    });
+
+    const totalPostViews = totalPostViewsAggregate._sum.views;
+
     return {
       totalPosts,
       totalPublishedPosts,
@@ -217,6 +233,7 @@ const getPostsStats = async () => {
       totalComments,
       totalApprovedComments,
       totalRejectedComments,
+      totalPostViews,
     };
   });
 
