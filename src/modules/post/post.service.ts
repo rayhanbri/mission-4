@@ -175,55 +175,99 @@ const deletePost = async (
 
 const getPostsStats = async () => {
   const transactionResult = await prisma.$transaction(async (tx) => {
-    const totalPosts = await tx.post.count();
+    // const totalPosts = await tx.post.count();
 
-    const totalPublishedPosts = await tx.post.count({
-      where: {
-        status: PostStatus.PUBLISHED,
-      },
-    });
-
-    const totalDraftPosts = await tx.post.count({
-      where: {
-        status: PostStatus.DRAFT,
-      },
-    });
-
-    const totalArchivedPosts = await tx.post.count({
-      where: {
-        status: PostStatus.ARCHIVED,
-      },
-    });
-
-    const totalComments = await tx.comment.count();
-
-    const totalApprovedComments = await tx.comment.count({
-      where: {
-        status: CommentStatus.APPROVED,
-      },
-    });
-
-    const totalRejectedComments = await tx.comment.count({
-      where: {
-        status: CommentStatus.REJECT,
-      },
-    });
-
-    // //Not a good approach
-    // const allPosts = await tx.post.findMany();
-    // let totalPostViews = 0;
-    // allPosts.forEach((post) => {
-    //   totalPostViews = totalPostViews + post.views;
+    // const totalPublishedPosts = await tx.post.count({
+    //   where: {
+    //     status: PostStatus.PUBLISHED,
+    //   },
     // });
 
-    // //Good Approach Aggregation concept explore it
-    const totalPostViewsAggregate = await tx.post.aggregate({
-      _sum: {
-        views: true,
-      },
-    });
+    // const totalDraftPosts = await tx.post.count({
+    //   where: {
+    //     status: PostStatus.DRAFT,
+    //   },
+    // });
 
-    const totalPostViews = totalPostViewsAggregate._sum.views;
+    // const totalArchivedPosts = await tx.post.count({
+    //   where: {
+    //     status: PostStatus.ARCHIVED,
+    //   },
+    // });
+
+    // const totalComments = await tx.comment.count();
+
+    // const totalApprovedComments = await tx.comment.count({
+    //   where: {
+    //     status: CommentStatus.APPROVED,
+    //   },
+    // });
+
+    // const totalRejectedComments = await tx.comment.count({
+    //   where: {
+    //     status: CommentStatus.REJECT,
+    //   },
+    // });
+
+    // // //Not a good approach
+    // // const allPosts = await tx.post.findMany();
+    // // let totalPostViews = 0;
+    // // allPosts.forEach((post) => {
+    // //   totalPostViews = totalPostViews + post.views;
+    // // });
+
+    // // //Good Approach Aggregation concept explore it
+    // const totalPostViewsAggregate = await tx.post.aggregate({
+    //   _sum: {
+    //     views: true,
+    //   },
+    // });
+
+    // const totalPostViews = totalPostViewsAggregate._sum.views;
+
+    const [
+      totalPosts,
+      totalPublishedPosts,
+      totalDraftPosts,
+      totalArchivedPosts,
+      totalComments,
+      totalApprovedComments,
+      totalRejectedComments,
+      totalPostViewsAggregate,
+    ] = await Promise.all([
+      await tx.post.count(),
+      await tx.post.count({
+        where: {
+          status: PostStatus.PUBLISHED,
+        },
+      }),
+      await tx.post.count({
+        where: {
+          status: PostStatus.DRAFT,
+        },
+      }),
+      await tx.post.count({
+        where: {
+          status: PostStatus.ARCHIVED,
+        },
+      }),
+      await tx.comment.count(),
+      await tx.comment.count({
+        where: {
+          status: CommentStatus.APPROVED,
+        },
+      }),
+      await tx.comment.count({
+        where: {
+          status: CommentStatus.REJECT,
+        },
+      }),
+      await tx.post.aggregate({
+        _sum: {
+          views: true,
+        },
+      }),
+    ]);
 
     return {
       totalPosts,
@@ -233,7 +277,7 @@ const getPostsStats = async () => {
       totalComments,
       totalApprovedComments,
       totalRejectedComments,
-      totalPostViews,
+      totalPostViews: totalPostViewsAggregate._sum.views,
     };
   });
 
