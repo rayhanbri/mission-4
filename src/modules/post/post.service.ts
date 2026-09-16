@@ -269,6 +269,8 @@ const getPostsStats = async () => {
       }),
     ]);
 
+    //module 22 done
+
     return {
       totalPosts,
       totalPublishedPosts,
