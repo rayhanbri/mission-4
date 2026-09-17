@@ -107,7 +107,7 @@ const getAllPosts = async () => {
 
     // Pagination with (limit or take) and (skip or page ) what is take and skip how it work?
 
-    //  koita dhekhabho ei tar jonno take , koi numbere tah skip korbo 
+    //  koita dhekhabho ei tar jonno take , koi numbere tah skip korbo
     // take : 1,
     // take : 2,
     // for first page skip is 0
@@ -115,10 +115,18 @@ const getAllPosts = async () => {
     // skip : 2, // visiting page 3
     // skip : 3, // visiting page 4
 
-
     //page =4 , limit / take = 1 => skip : (page-1) * limit =>
 
     //page = 3, limit / take = 10 => skip : (page -1 ) * limit = (3-1) * 10 = 20
+
+    // sorting in ascending or descending order on specific fields
+
+    // orderBy : {
+    //     createdAt : "desc",
+    //     title : "asc",
+    //     content : "desc"
+    //     //fieldName : asc/desc
+    // },
 
     include: {
       author: {
