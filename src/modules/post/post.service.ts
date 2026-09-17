@@ -14,7 +14,29 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
 };
 
 const getAllPosts = async () => {
+  // extact searching and partial searching ,searching and filtering
   const posts = await prisma.post.findMany({
+    // filtering / exact match with AND Operator
+
+    // where: {
+    //   title: "My Frist Post",
+    //   content: "Ronaldo ",
+    // },
+    where: {
+      AND: [
+        {
+          title: "My Frist Post",
+        },
+        {
+          content: "Ronaldo",
+        },
+        {
+          tags: {
+            has: "typescript",
+          },
+        },
+      ],
+    },
     include: {
       author: {
         omit: {
