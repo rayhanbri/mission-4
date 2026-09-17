@@ -2,13 +2,11 @@ import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
-import httpStatus from "http-status";
-import { prisma } from "./lib/prisma";
-import bcrypt from "bcryptjs";
 import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.routes";
 import { postRoutes } from "./modules/post/post.routes";
 import { commentRoutes } from "./modules/comment/comment.routes";
+import { notFound } from "./middlewares/notFound";
 const app: Application = express();
 
 app.use(
@@ -30,5 +28,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
+
+//must be in down
+app.use(notFound);
 
 export default app;
