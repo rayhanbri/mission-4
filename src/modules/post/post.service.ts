@@ -22,21 +22,54 @@ const getAllPosts = async () => {
     //   title: "My Frist Post",
     //   content: "Ronaldo ",
     // },
+    // where: {
+    //   AND: [
+    //     {
+    //       title: "My Frist Post",
+    //     },
+    //     {
+    //       content: "Ronaldo",
+    //     },
+    //     {
+    //       tags: {
+    //         has: "typescript",
+    //       },
+    //     },
+    //   ],
+    // },
+
+    // searching / partial match
+
+    // where: {
+    //   title: {
+    //     contains: "ronaLdo",
+    //     mode: "insensitive",
+    //   },
+    //   //     // X -> Not ideal for partial match
+    //   //ronaldo duita the thaklei dibe naile dibe na
+    //   // content: {
+    //   //   contains: "Ronaldo",
+    //   // },
+    // },
+    // shobb pabo title thakleo content e thakleo pabo amra
     where: {
-      AND: [
+      OR: [
         {
-          title: "My Frist Post",
+          title: {
+            contains: "Ron",
+            mode: "insensitive",
+          },
         },
+
         {
-          content: "Ronaldo",
-        },
-        {
-          tags: {
-            has: "typescript",
+          content: {
+            contains: "Ro",
+            mode: "insensitive",
           },
         },
       ],
     },
+
     include: {
       author: {
         omit: {
