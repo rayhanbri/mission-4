@@ -1,6 +1,11 @@
 import { CommentStatus, PostStatus } from "../../../generated/prisma/enums";
+import { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
-import { ICreatePostPayload, IUpdatePostPayload } from "./post.interface";
+import {
+  ICreatePostPayload,
+  IPostQuery,
+  IUpdatePostPayload,
+} from "./post.interface";
 
 const createPost = async (payload: ICreatePostPayload, userId: string) => {
   const result = await prisma.post.create({
@@ -13,120 +18,89 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
   return result;
 };
 
-const getAllPosts = async () => {
-  // extact searching and partial searching ,searching and filtering
-  const posts = await prisma.post.findMany({
-    // filtering / exact match with AND Operator
+const getAllPosts = async (query: IPostQuery) => {
+  // http://localhost:5000/api/posts?title=Ronaldo&content=Ronaldo&searchTerm=Ron
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+  const sortBy = query.sortBy ? query.sortBy : "createdAt";
+  const sortOrder = query.sortOrder ? query.sortOrder : "desc";
+  const tags = query.tags ? JSON.parse(query.tags as string) : null;
+  const tagsArray = Array.isArray(tags) ? tags : [];
 
-    // where: {
-    //   title: "My Frist Post",
-    //   content: "Ronaldo ",
-    // },
-    // where: {
-    //   AND: [
-    //     {
-    //       title: "My Frist Post",
-    //     },
-    //     {
-    //       content: "Ronaldo",
-    //     },
-    //     {
-    //       tags: {
-    //         has: "typescript",
-    //       },
-    //     },
-    //   ],
-    // },
+  const andConditions: PostWhereInput[] = [];
 
-    // searching / partial match
-
-    // where: {
-    //   title: {
-    //     contains: "ronaLdo",
-    //     mode: "insensitive",
-    //   },
-    //   //     // X -> Not ideal for partial match
-    //   //ronaldo duita the thaklei dibe naile dibe na
-    //   // content: {
-    //   //   contains: "Ronaldo",
-    //   // },
-    // },
-    // shobb pabo title thakleo content e thakleo pabo amra
-    // where: {
-    //   OR: [
-    //     {
-    //       title: {
-    //         contains: "Ron",
-    //         mode: "insensitive",
-    //       },
-    //     },
-
-    //     {
-    //       content: {
-    //         contains: "Ro",
-    //         mode: "insensitive",
-    //       },
-    //     },
-    //   ],
-    // },
-
-    // combining search (OR Operator) and filtering (AND)
-
-    where: {
-      //filtering & searching combined
-      AND: [
+  if (query.searchTerm) {
+    andConditions.push({
+      OR: [
         {
-          // searching
-          OR: [
-            {
-              title: {
-                contains: "Ron",
-                mode: "insensitive",
-              },
-            },
-
-            {
-              content: {
-                contains: "Ron",
-                mode: "insensitive",
-              },
-            },
-          ],
+          title: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
         },
-
-        // filtering
         {
-          title: "Ronaldo Nazario",
-        },
-
-        {
-          content: "Ronaldo",
+          content: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
         },
       ],
+    });
+  }
+
+  if (query.title) {
+    andConditions.push({
+      title: query.title,
+    });
+  }
+
+  if (query.content) {
+    andConditions.push({
+      content: query.content,
+    });
+  }
+
+  if (query.authorId) {
+    andConditions.push({
+      authorId: query.authorId,
+    });
+  }
+
+  if (query.isFeatured) {
+    andConditions.push({
+      isFeatured: Boolean(query.isFeatured),
+    });
+  }
+
+  if (query.tags) {
+    andConditions.push({
+      tags: {
+        hasSome: tagsArray,
+      },
+    });
+  }
+
+  if (query.status) {
+    andConditions.push({
+      status: query.status,
+    });
+  }
+
+  const posts = await prisma.post.findMany({
+    where: {
+      AND: andConditions,
     },
 
-    // Pagination with (limit or take) and (skip or page ) what is take and skip how it work?
+    // dynamic pagination and sorting
 
-    //  koita dhekhabho ei tar jonno take , koi numbere tah skip korbo
-    // take : 1,
-    // take : 2,
-    // for first page skip is 0
-    // skip : 1, // visiting page 2
-    // skip : 2, // visiting page 3
-    // skip : 3, // visiting page 4
+    take: limit,
+    skip: skip,
 
-    //page =4 , limit / take = 1 => skip : (page-1) * limit =>
-
-    //page = 3, limit / take = 10 => skip : (page -1 ) * limit = (3-1) * 10 = 20
-
-    // sorting in ascending or descending order on specific fields
-
-    // orderBy : {
-    //     createdAt : "desc",
-    //     title : "asc",
-    //     content : "desc"
-    //     //fieldName : asc/desc
-    // },
+    orderBy: {
+      // sortBy : sortOrder
+      [sortBy]: sortOrder,
+    },
 
     include: {
       author: {
