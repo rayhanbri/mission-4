@@ -52,20 +52,55 @@ const getAllPosts = async () => {
     //   // },
     // },
     // shobb pabo title thakleo content e thakleo pabo amra
+    // where: {
+    //   OR: [
+    //     {
+    //       title: {
+    //         contains: "Ron",
+    //         mode: "insensitive",
+    //       },
+    //     },
+
+    //     {
+    //       content: {
+    //         contains: "Ro",
+    //         mode: "insensitive",
+    //       },
+    //     },
+    //   ],
+    // },
+
+    // combining search (OR Operator) and filtering (AND)
+
     where: {
-      OR: [
+      //filtering & searching combined
+      AND: [
         {
-          title: {
-            contains: "Ron",
-            mode: "insensitive",
-          },
+          // searching
+          OR: [
+            {
+              title: {
+                contains: "Ron",
+                mode: "insensitive",
+              },
+            },
+
+            {
+              content: {
+                contains: "Ron",
+                mode: "insensitive",
+              },
+            },
+          ],
+        },
+
+        // filtering
+        {
+          title: "Ronaldo Nazario",
         },
 
         {
-          content: {
-            contains: "Ro",
-            mode: "insensitive",
-          },
+          content: "Ronaldo",
         },
       ],
     },
