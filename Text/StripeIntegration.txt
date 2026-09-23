@@ -5,3 +5,5 @@ How to integrate stripe
 2.copy the product id and save it in .env
 
 3.npm i stripe 
+
+4.GET THE stripe secret key
