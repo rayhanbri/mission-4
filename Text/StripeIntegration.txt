@@ -1,0 +1,7 @@
+How to integrate stripe 
+
+1. create a product and copy the product id . 
+
+2.copy the product id and save it in .env
+
+3.npm i stripe 
